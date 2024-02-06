@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-write_file = __import__('1-write_file').write_file
+"""writes to a text file"""
 
-nb_characters = write_file("my_first_file.txt", "This School is so cool!\n")
-print(nb_characters)
+
+def write_file(filename="", text=""):
+    """writes text to filename"""
+    with open(filename, mode="w", encoding="utf-8") as file:
+        return (file.write(text))
