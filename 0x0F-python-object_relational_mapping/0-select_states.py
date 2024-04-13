@@ -1,18 +1,26 @@
 #!/usr/bin/python3
-""" 
-lists all states with a name starting with N (upper N)
- from the database hbtn_0e_0_usa
- Usage: ./1-filter_states.py <mysql username>
-                            <mysql password>
-                            <database name>
-"""
+"""import sys module and MySQLdb module"""
 
-import sys
-from unicodedata import name
-import MySQLdb
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `states` ORDER BY `id`")
-    [print(state) for state in c.fetchall() if state[1][0] == "N"]
+    """ensures that the module can be only called directly"""
+    import sys
+    import MySQLdb
+    """accepts three inputs"""
+    usr = sys.argv[1]
+    psw = sys.argv[2]
+    db = sys.argv[3]
+    db = MySQLdb.connect(host="localhost", port=3306,
+                         user=usr, passwd=psw, db=db)
+
+    cursor = db.cursor()
+
+    query = "SELECT * FROM states ORDER BY states.id ASC"
+    cursor.execute(query)
+
+    results = cursor.fetchall()
+    for row in results:
+        print(row)
+
+    cursor.close()
+    db.close()
